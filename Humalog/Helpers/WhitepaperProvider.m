@@ -25,9 +25,8 @@
 {
     if ((self = [super init])) {
         whitepaperList = [NSArray arrayWithObjects:
-                          @"ONSET and OFFSET study, 2009",
-                          @"PLATO trial, 2009",
-                          @"Wallentin Spanish",
+                          @"ATACAND_IPP",
+                          @"ATACAND_PLUS_IPP",
                           nil];
         previewList = [NSMutableArray array];
         preView = [[UIWebView alloc] initWithFrame:kPreviewSize];
@@ -90,7 +89,7 @@
 
 - (NSUInteger)numberOfDocuments
 {
-    return 3;
+    return 2;
 }
 
 - (UIView<ContentControlProtocol> *)viewForDocumentAtIndex:(NSUInteger)index

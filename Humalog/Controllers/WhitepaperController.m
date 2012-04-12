@@ -77,6 +77,11 @@
     [documentView removeFromSuperview];
 }
 
+- (void)menubarViewDidPressIPP
+{
+    [documentView removeFromSuperview];
+}
+
 - (void)menubarViewDidPressApertura
 {
     if ([self.parentViewController respondsToSelector:@selector(loadSlides)])

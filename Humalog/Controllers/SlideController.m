@@ -206,6 +206,16 @@
     [self loadContent];
 }
 
+- (void)loadPDF
+{
+    [self saveAnnotations];
+
+    
+    //[self.view addSubview:webView];
+    contentView = [slideProvider viewForPDF:@"REFERENCIAS_ATACAND"];
+
+}
+
 #pragma mark - Delegate Methods
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
@@ -304,10 +314,9 @@
     [self loadLastDocument];
 }
 
-- (void)menubarViewDidPressEstudios
+- (void)menubarViewDidPressReferencias
 {
-    if ([self.parentViewController respondsToSelector:@selector(loadWhitepapers)])
-        [self.parentViewController performSelector:@selector(loadWhitepapers)];
+    [self loadPDF];
 }
 
 - (void)menubarViewDidPressEspecial
@@ -315,10 +324,11 @@
     [self loadSpecial];
 }
 
-//- (void)menubarViewDidPressIPP
-//{
-//    NSLog(@"IPP");
-//}
+- (void)menubarViewDidPressIPP
+{
+    if ([self.parentViewController respondsToSelector:@selector(loadWhitepapers)])
+        [self.parentViewController performSelector:@selector(loadWhitepapers)];
+}
 
 - (void)toolbarViewDidPressBack
 {

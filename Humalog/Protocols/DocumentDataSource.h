@@ -12,7 +12,9 @@
 @protocol DocumentDataSource <NSObject>
 - (NSUInteger)numberOfDocuments;
 - (UIView<ContentControlProtocol> *)viewForDocumentAtIndex:(NSUInteger)index;
+
 @optional
+- (UIView<ContentControlProtocol> *)viewForPDF:(NSString *)pdf;
 - (UIImageView *)previewForDocumentAtIndex:(NSUInteger)index;
 //- (NSArray *)categoryNames;
 //- (NSArray *)documentIndicesForCategoryNamed:(NSString *)categoryName;
