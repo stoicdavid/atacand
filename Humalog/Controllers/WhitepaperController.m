@@ -98,6 +98,7 @@
     
     iCarousel *carousel = [[iCarousel alloc] initWithFrame:self.view.bounds];
     carousel.type = iCarouselTypeRotary;
+    carousel.decelerationRate=0.1;
     carousel.delegate   = self;
     carousel.dataSource = self;
     
