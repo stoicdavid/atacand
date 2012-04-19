@@ -14,6 +14,7 @@
     NSArray             *documentTitles;
     NSArray             *categoriesAndIndices;
     WebContentView      *webContentView;
+
 }
 
 @end
@@ -25,6 +26,8 @@
 {
     if ((self = [super init])) {
         webContentView = [[WebContentView alloc] init];
+        webContentView.backgroundColor = [UIColor clearColor];
+        webContentView.opaque = NO;
         webContentView.delegate = self;
         webContentView.scalesPageToFit = NO;
         webContentView.scrollView.scrollEnabled = NO;
@@ -41,18 +44,19 @@
         
         documentTitles = [NSArray arrayWithObjects:
                           @"Apertura",
-                          @"Epidemiología",
-                          @"Riesgo",
-                          @"Director",
-                          @"Indicaciones",
-                          @"Mecanismo de acción",
-                          @"Rapidez de acción",
-                          @"Eficacia",
-                          @"Mantenimiento",
-                          @"Seguridad",
-                          @"Dosis",
+                          @"Prevalencia y Eficacia",
+                          @"Eficacia vs Competencia",
+                          @"Control",
+                          @"Para todo tipo de pacientes",
+                          @"Evidencia Clínica",
+                          @"Evidencia Clínica vs competencia",
+                          @"Prehipertensión",
+                          @"Protección Superior",
+                          @"Atacand Plus",
+                          @"Esquema de tratamiento",
                           @"Cierre",
                           nil];
+
     }
     return self;
 }
@@ -127,9 +131,25 @@
 }
 
 // Delegation
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    webContentView.hidden=YES;
+    
+}
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [self.delegate contentViewDidFinishLoad];
+    [self performSelector:@selector(delay) withObject:nil afterDelay:.5];
+    
+        
 }
+
+- (void)delay{
+
+    [self.delegate contentViewDidFinishLoad];
+        webContentView.hidden=NO;
+}
+
 
 @end

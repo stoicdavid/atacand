@@ -12,7 +12,7 @@
 #import "Viewport.h"
 #import "ThumbnailStackView.h"
 
-#define FADE_DURATION 0.25
+#define FADE_DURATION .5
 #define STACK_OFFSET  -15
 
 @interface SlideController () {
@@ -25,6 +25,7 @@
     NSUInteger                     currentCategoryIndex;
     enum NavigationPosition        navigationPosition;
     BOOL                           drawThumbnails;
+//    UIView                         *loading;
 }
 @property (nonatomic, assign) enum NavigationPosition navigationPosition;
 - (void)updateNavigationPosition;
@@ -40,8 +41,12 @@
         // Custom initialization
         slideProvider = [[SlideProvider alloc] init];
         slideProvider.delegate = self;
-        
+
         drawThumbnails = YES;
+//        loading = [[UIView alloc] init];
+//        loading.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"atacand.jpg"]];
+//        [self.view addSubview:loading];
+
     }
     return self;
 }
@@ -52,8 +57,9 @@
     
     self.view = [[UIView alloc] initWithFrame:[Viewport contentArea]];
     self.view.opaque = YES;
-    self.view.backgroundColor = [UIColor whiteColor];
-    
+    //self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"atacand.jpg"]];
+
     contentView = [slideProvider viewForDocumentAtIndex:currentSlide];
     contentView.frame = self.view.frame;
     [self.view addSubview:contentView];
@@ -90,7 +96,7 @@
     // Hide content views until content is loaded
     contentView.alpha    = 0.0;
     annotationView.alpha = 0.0;
-    
+
     [self updateNavigationPosition];
 }
 
@@ -251,14 +257,20 @@
     title.textColor = [UIColor whiteColor];
     title.text = [slideProvider titleForDocumentAtIndex:[slideProvider rangeForCategoryIndex:currentCategoryIndex].location + index];
     title.font = [UIFont boldSystemFontOfSize:15.0];
-    CGSize titleSize = [title.text sizeWithFont:title.font];
+    CGSize titleSize = [title.text sizeWithFont:title.font
+                                   constrainedToSize:CGSizeMake(150.0, 100.0)
+                                   lineBreakMode:UILineBreakModeWordWrap];
     title.frame = CGRectMake(0, 0, titleSize.width, titleSize.height); 
+    title.lineBreakMode= UILineBreakModeWordWrap;
+    title.numberOfLines=0;
+    [title sizeToFit];
+    [title setTextAlignment:UITextAlignmentCenter];
     title.center = CGPointMake(thumb.bounds.size.width / 2.0, title.center.y);
     
     // Container
     UIView *v = [[UIView alloc] initWithFrame:thumb.frame];
     if (drawThumbnails) {
-        title.center = CGPointMake(title.center.x, thumb.bounds.size.height + 12.0);
+        title.center = CGPointMake(title.center.x, thumb.bounds.size.height + 18.0);
         [v addSubview:thumb];
     }
     [v addSubview:title];
@@ -277,7 +289,7 @@
 
 - (NSUInteger)numberOfVisibleItemsInCarousel:(iCarousel *)carousel
 {
-    return 5;
+    return 3;
 }
 
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
@@ -287,8 +299,11 @@
     [self loadContent];
 }
 
+
+
 - (void)contentViewDidFinishLoad
 {
+    
     [self fadeIn];
 }
 
