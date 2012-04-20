@@ -137,6 +137,43 @@
 {
     [whitepaperController.view removeFromSuperview];
     [self.view insertSubview:slideController.view belowSubview:gestureView];
+    [slideController menubarViewDidPressApertura];
+    
+    // Delegation
+    toolbarView.delegate = slideController;
+    menubarView.delegate = slideController;
+    [toolbarView hide];
+}
+
+- (void)loadSlideCierre
+{
+    [whitepaperController.view removeFromSuperview];
+    [self.view insertSubview:slideController.view belowSubview:gestureView];
+    [slideController menubarViewDidPressCierre];
+    
+    // Delegation
+    toolbarView.delegate = slideController;
+    menubarView.delegate = slideController;
+    [toolbarView hide];
+}
+
+- (void)loadSlideEspecial
+{
+    [whitepaperController.view removeFromSuperview];
+    [self.view insertSubview:slideController.view belowSubview:gestureView];
+    [slideController menubarViewDidPressEspecial];
+    
+    // Delegation
+    toolbarView.delegate = slideController;
+    menubarView.delegate = slideController;
+    [toolbarView hide];
+}
+
+- (void)loadSlideReferencias
+{
+    [whitepaperController.view removeFromSuperview];
+    [self.view insertSubview:slideController.view belowSubview:gestureView];
+    [slideController menubarViewDidPressReferencias];
     
     // Delegation
     toolbarView.delegate = slideController;
@@ -147,10 +184,11 @@
 - (void)loadWhitepapers
 {
     [slideController.view removeFromSuperview];
+    //[self.view addSubview:whitepaperController.view];
     [self.view insertSubview:whitepaperController.view belowSubview:gestureView];
     
     // Delegation
-    toolbarView.delegate = whitepaperController;
+    //toolbarView.delegate = whitepaperController;
     menubarView.delegate = whitepaperController;
     [toolbarView hide];
 }

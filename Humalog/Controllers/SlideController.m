@@ -25,7 +25,7 @@
     NSUInteger                     currentCategoryIndex;
     enum NavigationPosition        navigationPosition;
     BOOL                           drawThumbnails;
-//    UIView                         *loading;
+
 }
 @property (nonatomic, assign) enum NavigationPosition navigationPosition;
 - (void)updateNavigationPosition;
@@ -43,9 +43,7 @@
         slideProvider.delegate = self;
 
         drawThumbnails = YES;
-//        loading = [[UIView alloc] init];
-//        loading.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"atacand.jpg"]];
-//        [self.view addSubview:loading];
+
 
     }
     return self;
@@ -84,6 +82,7 @@
     // Thumbnail stack
     NSUInteger stackWidth = [slideProvider previewForDocumentAtIndex:0].bounds.size.width + 64.0;
     stackView = [[ThumbnailStackView alloc] initWithFrame:CGRectInset(CGRectMake(0, 0, stackWidth, self.view.frame.size.height * 0.75), 0, 30)];
+    stackView.scrollEnabled=NO;
     stackView.delegate   = self;
     stackView.dataSource = self;
     stackView.hidden = YES;
@@ -266,14 +265,25 @@
     [title sizeToFit];
     [title setTextAlignment:UITextAlignmentCenter];
     title.center = CGPointMake(thumb.bounds.size.width / 2.0, title.center.y);
+
+    UILabel *separator = [[UILabel alloc] init];    
+    separator.frame = CGRectMake(0, 0, 150.0, 2.0); 
+    //separator.layer.backgroundColor = [UIColor redColor].CGColor;
+
+
     
     // Container
     UIView *v = [[UIView alloc] initWithFrame:thumb.frame];
     if (drawThumbnails) {
-        title.center = CGPointMake(title.center.x, thumb.bounds.size.height + 18.0);
+        title.center = CGPointMake(title.center.x, thumb.bounds.size.height + 20.0);
         [v addSubview:thumb];
+        //separator.center = CGPointMake(thumb.bounds.size.width / 2.0,105 );    
+    }else {
+        separator.center = CGPointMake(thumb.bounds.size.width / 2.0,title.bounds.size.height );
+        [v addSubview:separator];
     }
     [v addSubview:title];
+
     return v;
 }
 

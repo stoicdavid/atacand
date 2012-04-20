@@ -89,12 +89,33 @@
     
 }
 
+- (void)menubarViewDidPressCierre
+{
+    if ([self.parentViewController respondsToSelector:@selector(loadSlideCierre)])
+        [self.parentViewController performSelector:@selector(loadSlideCierre)];
+    
+}
+
+- (void)menubarViewDidPressEspecial
+{
+    if ([self.parentViewController respondsToSelector:@selector(loadSlideEspecial)])
+        [self.parentViewController performSelector:@selector(loadSlideEspecial)];
+    
+}
+
+- (void)menubarViewDidPressReferencias
+{
+    if ([self.parentViewController respondsToSelector:@selector(loadSlideReferencias)])
+        [self.parentViewController performSelector:@selector(loadSlideReferencias)];
+    
+}
+
 #pragma mark - View lifecycle
 
 - (void)loadView
 {
     self.view = [[UIView alloc] initWithFrame:[Viewport contentArea]];
-    self.view.backgroundColor = [UIColor purpleColor];
+    self.view.backgroundColor = [UIColor darkGrayColor];
     
     iCarousel *carousel = [[iCarousel alloc] initWithFrame:self.view.bounds];
     carousel.type = iCarouselTypeRotary;
